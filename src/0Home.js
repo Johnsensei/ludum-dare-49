@@ -15,17 +15,20 @@ const Home = (props) => {
                 <Text style={styles.storyText}>Home</Text>
                 
                 <View style={styles.buttonRow}>
-                {/* <View> */}
-                    <Button
-                        title='Choice A'
-                        onPress={() => props.navigation.replace('A')}
-                        style={styles.choiceButton}
-                    />
-                    <Button
-                        title='Choice B'
-                        onPress={() => props.navigation.replace('B')}
-                        style={styles.choiceButton}
-                    />
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='Choice A'
+                            onPress={() => props.navigation.replace('A')}
+                            // style={styles.choiceButton}
+                        />
+                    </View>
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='Choice B'
+                            onPress={() => props.navigation.replace('B')}
+                            // style={styles.choiceButton}
+                        />
+                    </View>
                 </View>
 
             </View>
@@ -58,17 +61,11 @@ const styles = StyleSheet.create({
         // flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        margin: 10
+        justifyContent: 'space-around',
+        // margin: 10
     },
     choiceButton: {
-        flexDirection: 'row',
-        flex: 1,
-        marginHorizontal: 20,
-        marginRight: 20,
-        margin: 20,
-        padding: 10,
-        justifyContent: 'space-evenly'
+        backgroundColor: 'grey'
     },
     imageBackground: {
         width: '100%',
