@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 
-import Background from '../img/DemonCastle.png';
+import Background from '../img/World.png';
 
-const A = (props) => {
+const B = (props) => {
 
     return(
         <View style={styles.container}>
@@ -12,20 +12,20 @@ const A = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                <Text style={styles.storyText}>Choice A</Text>
+                <Text style={styles.storyText}>Choice B</Text>
                 
                 <View style={styles.buttonRow}>
                 {/* <View> */}
-                <Button
-                    title='Choice C'
-                    onPress={() => props.navigation.replace('A')}
-                    // style={styles.choiceButton}
-                />
-                <Button
-                    title='Choice D'
-                    onPress={() => props.navigation.replace('B')}
-                    // style={styles.choiceButton}
-                />
+                    <Button
+                        title='Choice E'
+                        onPress={() => props.navigation.replace('A')}
+                        style={styles.choiceButton}
+                    />
+                    <Button
+                        title='Choice F'
+                        onPress={() => props.navigation.replace('B')}
+                        style={styles.choiceButton}
+                    />
                 </View>
 
             </View>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         margin: 50
     },
     buttonRow: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
@@ -63,10 +63,12 @@ const styles = StyleSheet.create({
     },
     choiceButton: {
         flexDirection: 'row',
-        flex: 20,
+        flex: 1,
         marginHorizontal: 20,
         marginRight: 20,
-        padding: 10
+        margin: 20,
+        padding: 10,
+        justifyContent: 'space-evenly'
     },
     imageBackground: {
         width: '100%',
@@ -74,4 +76,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default A
+export default B;
