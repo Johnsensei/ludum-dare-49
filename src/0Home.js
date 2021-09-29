@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import TypeWriter from 'react-native-typewriter';
 
 import Background from '../img/Devil.png';
 
 const Home = (props) => {
+
+
 
     return(
         <View style={styles.container}>
@@ -12,8 +15,13 @@ const Home = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                <Text style={styles.storyText}>Home</Text>
-                
+                {/* <Text style={styles.storyText}>Home</Text> */}
+                <TypeWriter
+                    typing={1}
+                    style={styles.storyText}
+                >
+                    Greetings.{'\n'}What is your name?
+                </TypeWriter>
                 <View style={styles.buttonRow}>
                     <View style={{flex: 1, margin: 20}}>
                         <Button
@@ -54,6 +62,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 50,
         fontWeight: 'bold',
+        textShadowOffset: {width: 2, height: 2},
+        textShadowRadius: 10,
+        textShadowColor: 'red',
+        textAlign: 'center',
         //TODO: Choose font.
         margin: 50
     },
