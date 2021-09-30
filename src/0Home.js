@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from 'react-native';
 import TypeWriter from 'react-native-typewriter';
 
 import Background from '../img/Devil.png';
@@ -13,6 +13,7 @@ const Home = (props) => {
       ];
 
     const [step, setStep] = useState(0);
+    const [playerName, setPlayerName] = useState('');
 
     return(
         <View style={styles.container}>
@@ -21,39 +22,67 @@ const Home = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                <TypeWriter
-                    typing={
-                        (step > 0) ? 0 : 1
-                    }
-                    onTypingEnd={() => {setStep(step+1)}}
-                    style={styles.storyText}
-                >
-                    Greetings.{'\n'}
+                
+                {step <= 1 ?
+                    <TypeWriter
+                        typing={
+                            (step > 0) ? 0 : 1
+                        }
+                        onTypingEnd={() => {setStep(step+1)}}
+                        style={styles.storyText}
+                    >
+                        Greetings.{'\n'}
+                        What is your name?
+                        
+                    </TypeWriter>
+                : null}
+
+                {step === 1 ?
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            maxLength={15}
+                            value={playerName}
+                            onChangeText={setPlayerName}
+                            onSubmitEditing={() => {setStep(step+1)}}
+                        /> 
+                    </View>
+                : null}
+
+                
+                {step >= 2 ?
+                    <TypeWriter
+                        typing={
+                            (step > 2) ? 0 : 1
+                        }
+                        onTypingEnd={() => {setStep(step+1)}}
+                        style={styles.storyText}
+                    >
+                    Welcome to this world, {playerName}.{'\n'}
                     What choice will you make?
                     
                 </TypeWriter>
+                : null}
 
-                
-                <View style={styles.buttonRow}>
-                {step===1 ?
-                    <>
-                    <View style={{flex: 1, margin: 20}}>
-                        <Button
-                            title='Choice A'
-                            onPress={() => props.navigation.replace('A')}
-                            // style={styles.choiceButton}
-                        />
+                {step === 3 ?
+                    <View style={styles.buttonRow}>
+                        <View style={{flex: 1, margin: 20}}>
+                            <Button
+                                title='Choice A'
+                                onPress={() => props.navigation.replace('A')}
+                                
+                            />
+                        </View>
+                        <View style={{flex: 1, margin: 20}}>
+                            <Button
+                                title='Choice B'
+                                onPress={() => props.navigation.replace('B')}
+                                
+                            />
+                        </View>
                     </View>
-                    <View style={{flex: 1, margin: 20}}>
-                        <Button
-                            title='Choice B'
-                            onPress={() => props.navigation.replace('B')}
-                            // style={styles.choiceButton}
-                        />
-                    </View>
-                    </>
                     : null}
-                </View>
+                
 
             </View>
 
@@ -92,13 +121,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         // margin: 10
     },
-    choiceButton: {
-        backgroundColor: 'grey'
-    },
     imageBackground: {
         width: '100%',
         height: '100%'
-    }
+    },
+    input: {
+        height: 100,
+        width: 500,
+        fontSize: 64,
+        textAlign: 'center',
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        backgroundColor: 'white'
+      }
   });
 
 export default Home;
