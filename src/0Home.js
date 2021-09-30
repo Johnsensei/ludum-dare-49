@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { render } from 'react-dom';
 import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 import TypeWriter from 'react-native-typewriter';
 
@@ -6,7 +7,12 @@ import Background from '../img/Devil.png';
 
 const Home = (props) => {
 
+    const delayMap = [
+        // increase delay by 400ms following every '.' character
+        { at: '.', delay: 3000 }
+      ];
 
+    const [step, setStep] = useState(0);
 
     return(
         <View style={styles.container}>
@@ -15,14 +21,22 @@ const Home = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                {/* <Text style={styles.storyText}>Home</Text> */}
                 <TypeWriter
-                    typing={1}
+                    typing={
+                        (step > 0) ? 0 : 1
+                    }
+                    onTypingEnd={() => {setStep(step+1)}}
                     style={styles.storyText}
                 >
-                    Greetings.{'\n'}What is your name?
+                    Greetings.{'\n'}
+                    What choice will you make?
+                    
                 </TypeWriter>
+
+                
                 <View style={styles.buttonRow}>
+                {step===1 ?
+                    <>
                     <View style={{flex: 1, margin: 20}}>
                         <Button
                             title='Choice A'
@@ -37,6 +51,8 @@ const Home = (props) => {
                             // style={styles.choiceButton}
                         />
                     </View>
+                    </>
+                    : null}
                 </View>
 
             </View>
