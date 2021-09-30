@@ -25,13 +25,14 @@ const Home = (props) => {
             <View style={styles.innerContainer}>
                 
                 {/* Opening Text */}
-                {/* TODO: add delay at game open. See typewriter docs. */}
                 {step <= 1 ?
                     <TypeWriter
                         typing={
                             (step > 0) ? 0 : 1
                         }
                         initialDelay={1000}
+                        maxDelay={100}
+                        delayMap={[{at: /\./, delay: 400}]}
                         onTypingEnd={() => {setStep(1)}}
                         style={styles.storyText}
                     >
@@ -60,6 +61,7 @@ const Home = (props) => {
                     typing={
                         (step > 2) ? 0 : 1
                     }
+                    delayMap={[{at: /\./, delay: 400}]}
                     onTypingEnd={() => {setStep(3)}}
                     style={styles.storyText}
                 >
@@ -129,6 +131,7 @@ const Home = (props) => {
                         typing={
                             (step > 6) ? 0 : 1
                         }
+                        delayMap={[{at: /\./, delay: 400}]}
                         onTypingEnd={() => {setStep(7)}}
                         style={styles.storyText}
                     >
