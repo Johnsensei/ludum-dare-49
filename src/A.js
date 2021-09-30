@@ -3,7 +3,9 @@ import { StyleSheet, Text, View, Button, ImageBackground } from 'react-native';
 
 import Background from '../img/DemonCastle.png';
 
-const A = (props) => {
+const A = ({route, navigation}) => {
+
+    const {playerName} = route.params;
 
     return(
         <View style={styles.container}>
@@ -12,7 +14,7 @@ const A = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                <Text style={styles.storyText}>Choice A</Text>
+                <Text style={styles.storyText}>The player {(playerName)} went with Choice A</Text>
                 
                 <View style={styles.buttonRow}>
                 {/* <View> */}

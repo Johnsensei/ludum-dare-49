@@ -24,20 +24,24 @@ const Home = (props) => {
             >
             <View style={styles.innerContainer}>
                 
+                {/* Opening Text */}
+                {/* TODO: add delay at game open. See typewriter docs. */}
                 {step <= 1 ?
                     <TypeWriter
                         typing={
                             (step > 0) ? 0 : 1
                         }
-                        onTypingEnd={() => {setStep(step+1)}}
+                        initialDelay={1000}
+                        onTypingEnd={() => {setStep(1)}}
                         style={styles.storyText}
                     >
-                        Greetings.{'\n'}
-                        What is your name?
+                    Greetings.{'\n'}
+                    What is your name?
                         
                     </TypeWriter>
                 : null}
 
+                {/* Initial name input. */}
                 {step === 1 ?
                     <View>
                         <TextInput
@@ -45,27 +49,98 @@ const Home = (props) => {
                             maxLength={15}
                             value={playerName}
                             onChangeText={setPlayerName}
-                            onSubmitEditing={() => {setStep(step+1)}}
+                            onSubmitEditing={() => {setStep(2)}}
                         /> 
                     </View>
                 : null}
 
-                
-                {step >= 2 ?
+                {/* Text asking to confirm player name. */}
+                {step >= 2 && step < 4 ?
                     <TypeWriter
-                        typing={
-                            (step > 2) ? 0 : 1
-                        }
-                        onTypingEnd={() => {setStep(step+1)}}
-                        style={styles.storyText}
-                    >
-                    Welcome to this world, {playerName}.{'\n'}
-                    What choice will you make?
-                    
+                    typing={
+                        (step > 2) ? 0 : 1
+                    }
+                    onTypingEnd={() => {setStep(3)}}
+                    style={styles.storyText}
+                >
+
+                Your name is:{'\n'}
+                {playerName}.{'\n'}
+                Is this correct?
+                
                 </TypeWriter>
                 : null}
 
+                {/* Buttons for player to choose Yes or No that name is correct. */}
                 {step === 3 ?
+                    <View style={styles.buttonRow}>
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='Yes, that is correct.'
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={styles.titleStyle}
+                            raised={true}
+                            onPress={() => setStep(6)}
+                            
+                        />
+                    </View>
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='No, I need to change it.'
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={styles.titleStyle}
+                            raised={true}
+                            onPress={() => setStep(4)}
+                            
+                        />
+                    </View>
+                </View>
+                : null}
+
+                {/* Text for player to correct their name. */}
+                {step >= 4 ?
+                    <TypeWriter
+                        typing={
+                            (step > 4) ? 0 : 1
+                        }
+                        onTypingEnd={() => {setStep(5)}}
+                        style={styles.storyText}
+                    >
+                        What is your name?   
+                    </TypeWriter>
+                : null}
+
+                {/* Text input for player to put corrected name. */}
+                {step === 5 ?
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            maxLength={15}
+                            value={playerName}
+                            onChangeText={setPlayerName}
+                            onSubmitEditing={() => {setStep(2)}}
+                        /> 
+                    </View>
+                : null}
+
+                {/* Text to proceed with story if player name is correct. */}
+                {step >= 6 ?
+                    <TypeWriter
+                        typing={
+                            (step > 6) ? 0 : 1
+                        }
+                        onTypingEnd={() => {setStep(7)}}
+                        style={styles.storyText}
+                    >
+                    
+                    Welcome to this world, {playerName}.{'\n'}
+                    What choice will you make?
+                    
+                    </TypeWriter>
+                : null}
+
+                {/* Buttons to make choice for next screen. */}
+                {step === 7 ?
                     <View style={styles.buttonRow}>
                         <View style={{flex: 1, margin: 20}}>
                             <Button
@@ -73,7 +148,8 @@ const Home = (props) => {
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
-                                onPress={() => props.navigation.replace('A')}
+                                //Pull the player name on A and B with const A = ({route, navigation}) => { const {playerName} = route.params;
+                                onPress={() => props.navigation.replace('A',{playerName: playerName})}
                                 
                             />
                         </View>
@@ -83,12 +159,12 @@ const Home = (props) => {
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
-                                onPress={() => props.navigation.replace('B')}
+                                onPress={() => props.navigation.replace('B',{playerName: playerName})}
                                 
                             />
                         </View>
                     </View>
-                    : null}
+                : null}
                 
 
             </View>
@@ -122,11 +198,9 @@ const styles = StyleSheet.create({
         margin: 50
     },
     buttonRow: {
-        // flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        // margin: 10
     },
     buttonStyle: {
         backgroundColor: 'grey'
