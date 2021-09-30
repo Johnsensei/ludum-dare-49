@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, Text, TextInput, View, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TextInput, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 import Background from '../img/Devil.png';
 
 const Home = (props) => {
-
-    const delayMap = [
-        // increase delay by 400ms following every '.' character
-        { at: '.', delay: 3000 }
-      ];
 
     const [step, setStep] = useState(0);
     const [playerName, setPlayerName] = useState('');
@@ -191,7 +186,7 @@ const styles = StyleSheet.create({
     },
     storyText: {
         color: '#fff',
-        fontSize: 50,
+        fontSize: RFPercentage(5),
         fontWeight: 'bold',
         textShadowOffset: {width: 2, height: 2},
         textShadowRadius: 10,
@@ -210,7 +205,7 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: 'white',
-        fontSize: 32
+        fontSize: RFPercentage(3)
     },
     imageBackground: {
         width: '100%',
