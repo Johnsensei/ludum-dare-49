@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, Text, TextInput, View, Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ImageBackground } from 'react-native';
+import { Button } from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
 
 import Background from '../img/Devil.png';
@@ -69,6 +70,9 @@ const Home = (props) => {
                         <View style={{flex: 1, margin: 20}}>
                             <Button
                                 title='Choice A'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
                                 onPress={() => props.navigation.replace('A')}
                                 
                             />
@@ -76,6 +80,9 @@ const Home = (props) => {
                         <View style={{flex: 1, margin: 20}}>
                             <Button
                                 title='Choice B'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
                                 onPress={() => props.navigation.replace('B')}
                                 
                             />
@@ -120,6 +127,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         // margin: 10
+    },
+    buttonStyle: {
+        backgroundColor: 'grey'
+    },
+    titleStyle: {
+        color: 'white',
+        fontSize: 32
     },
     imageBackground: {
         width: '100%',
