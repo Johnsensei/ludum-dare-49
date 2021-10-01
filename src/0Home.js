@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { Audio } from 'expo-av';
 
 import Background from '../img/Devil.png';
 
 const Home = (props) => {
 
+    //Code for sound settings.
+    const [musicStatus, setMusicStatus] = useState(false)
+    const [music, setMusic] = useState(new Audio.Sound());
+    
+    useEffect(()=>{
+      (async () => {
+              console.log('status', musicStatus)
+              if (musicStatus) {
+                  await music.loadAsync(require('../audio/music1.mp3'))
+                  try {
+                      await music.playAsync()
+                  } catch (e) {
+                      console.log(e)
+                  }
+              }else {
+                  await music.stopAsync()
+                  await music.unloadAsync()
+              }
+            })()
+    },[musicStatus]) 
+
+
+    const typewriterSounds = (token, num) => {
+        //Alternate which sound plays based on even/odd of num.
+    }
+
+    //Game progression state setup.
     const [step, setStep] = useState(0);
     const [playerName, setPlayerName] = useState('');
 
@@ -28,7 +56,9 @@ const Home = (props) => {
                         initialDelay={1000}
                         maxDelay={100}
                         delayMap={[{at: /\./, delay: 400}]}
-                        onTypingEnd={() => {setStep(1)}}
+                        onTypingEnd={() => { setStep(1);
+                                            setMusicStatus(!musicStatus);
+                                        }}
                         style={styles.storyText}
                     >
                     Greetings.{'\n'}
@@ -46,7 +76,7 @@ const Home = (props) => {
                             value={playerName}
                             onChangeText={setPlayerName}
                             onSubmitEditing={() => {setStep(2)}}
-                        /> 
+                        />
                     </View>
                 : null}
 
@@ -127,7 +157,8 @@ const Home = (props) => {
                             (step > 6) ? 0 : 1
                         }
                         delayMap={[{at: /\./, delay: 400}]}
-                        onTypingEnd={() => {setStep(7)}}
+                        onTypingEnd={() => {setStep(7);
+                        }}
                         style={styles.storyText}
                     >
                     
@@ -147,8 +178,13 @@ const Home = (props) => {
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 //Pull the player name on A and B with const A = ({route, navigation}) => { const {playerName} = route.params;
-                                onPress={() => props.navigation.replace('A',{playerName: playerName})}
-                                
+                                onPress={() => {
+                                    setMusicStatus(!musicStatus);
+                                    setTimeout(() => {
+                                        props.navigation.replace('A',{playerName: playerName})},
+                                    1
+                                    );
+                                }}
                             />
                         </View>
                         <View style={{flex: 1, margin: 20}}>
@@ -157,8 +193,13 @@ const Home = (props) => {
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
-                                onPress={() => props.navigation.replace('B',{playerName: playerName})}
-                                
+                                onPress={() => {
+                                    setMusicStatus(!musicStatus);
+                                    setTimeout(() => {
+                                        props.navigation.replace('B',{playerName: playerName})},
+                                    1
+                                    );
+                                }}
                             />
                         </View>
                     </View>
