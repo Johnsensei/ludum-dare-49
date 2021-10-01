@@ -10,20 +10,6 @@ import Background from '../img/Devil.png';
 const Home = (props) => {
 
     //Code for sound settings.
-
-//This block of code works for playing music but not stopping it.
-    // let music1 = new Audio.Sound();
-    // music1.loadAsync(require('../audio/music1.mp3'));
-
-    // function playAudio(audio){
-    //     audio.playAsync();
-    // }
-
-    // function stopAudio(audio){
-    //     audio.stopAsync();
-    //     audio.unloadAsync();
-    // }
-
     let typeSFX1 = new Audio.Sound();
     typeSFX1.loadAsync(require('../audio/type1-5.mp3'));
     let typeSFX2 = new Audio.Sound();
@@ -34,7 +20,6 @@ const Home = (props) => {
         //Do we need to unload the sfx?
     }
 
-
     const [musicStatus, setMusicStatus] = useState(false)
     const [music, setMusic] = useState(new Audio.Sound());
     
@@ -44,6 +29,8 @@ const Home = (props) => {
               if (musicStatus) {
                   await music.loadAsync(require('../audio/music1.mp3'))
                   try {
+                    //Change this whether you want looping or not.
+                    //As there is no way to fade music out, short non-looping music files may be best.
                     await music.setIsLoopingAsync(true); 
                     await music.playAsync()
                   } catch (err) {
@@ -55,11 +42,6 @@ const Home = (props) => {
               }
             })()
     },[musicStatus]) 
-
-
-    const typewriterSounds = (token, num) => {
-        //Alternate which sound plays based on even/odd of num.
-    }
 
     //Game progression state setup.
     const [step, setStep] = useState(0);
@@ -82,13 +64,11 @@ const Home = (props) => {
                         initialDelay={1000}
                         maxDelay={100}
                         delayMap={[{at: /\./, delay: 400}]}
-                        // onTyped={() => playSFX(typeSFX1)}
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
                         onTypingEnd={() => { setStep(1);
                                             setMusicStatus(!musicStatus);
-                                            // playSFX(typeSFX1);
                                         }}
                         style={styles.storyText}
                     >
@@ -119,6 +99,9 @@ const Home = (props) => {
                         (step > 2) ? 0 : 1
                     }
                     delayMap={[{at: /\./, delay: 400}]}
+                    onTyped = {(token, num) => {
+                        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                    }}
                     onTypingEnd={() => {setStep(3)}}
                     style={styles.storyText}
                 >
@@ -162,6 +145,9 @@ const Home = (props) => {
                         typing={
                             (step > 4) ? 0 : 1
                         }
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
                         onTypingEnd={() => {setStep(5)}}
                         style={styles.storyText}
                     >
@@ -189,6 +175,9 @@ const Home = (props) => {
                             (step > 6) ? 0 : 1
                         }
                         delayMap={[{at: /\./, delay: 400}]}
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
                         onTypingEnd={() => {setStep(7);
                         }}
                         style={styles.storyText}
