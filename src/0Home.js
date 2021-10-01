@@ -80,6 +80,7 @@ const Home = (props) => {
                         initialDelay={1000}
                         maxDelay={100}
                         delayMap={[{at: /\./, delay: 400}]}
+                        onTyped={() => playSFX(typeSFX1)}
                         onTypingEnd={() => { setStep(1);
                                             setMusicStatus(!musicStatus);
                                             // playSFX(typeSFX1);
