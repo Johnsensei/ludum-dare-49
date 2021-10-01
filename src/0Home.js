@@ -25,7 +25,9 @@ const Home = (props) => {
     // }
 
     let typeSFX1 = new Audio.Sound();
-    typeSFX1.loadAsync(require('../audio/type1.wav'));
+    typeSFX1.loadAsync(require('../audio/type1-5.mp3'));
+    let typeSFX2 = new Audio.Sound();
+    typeSFX2.loadAsync(require('../audio/type2.mp3'));
 
     function playSFX(sfx){
         sfx.replayAsync();
@@ -80,7 +82,10 @@ const Home = (props) => {
                         initialDelay={1000}
                         maxDelay={100}
                         delayMap={[{at: /\./, delay: 400}]}
-                        onTyped={() => playSFX(typeSFX1)}
+                        // onTyped={() => playSFX(typeSFX1)}
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
                         onTypingEnd={() => { setStep(1);
                                             setMusicStatus(!musicStatus);
                                             // playSFX(typeSFX1);
