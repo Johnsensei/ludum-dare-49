@@ -10,6 +10,29 @@ import Background from '../img/Devil.png';
 const Home = (props) => {
 
     //Code for sound settings.
+
+//This block of code works for playing music but not stopping it.
+    // let music1 = new Audio.Sound();
+    // music1.loadAsync(require('../audio/music1.mp3'));
+
+    // function playAudio(audio){
+    //     audio.playAsync();
+    // }
+
+    // function stopAudio(audio){
+    //     audio.stopAsync();
+    //     audio.unloadAsync();
+    // }
+
+    let typeSFX1 = new Audio.Sound();
+    typeSFX1.loadAsync(require('../audio/type1.wav'));
+
+    function playSFX(sfx){
+        sfx.replayAsync();
+        //Do we need to unload the sfx?
+    }
+
+
     const [musicStatus, setMusicStatus] = useState(false)
     const [music, setMusic] = useState(new Audio.Sound());
     
@@ -19,9 +42,10 @@ const Home = (props) => {
               if (musicStatus) {
                   await music.loadAsync(require('../audio/music1.mp3'))
                   try {
-                      await music.playAsync()
-                  } catch (e) {
-                      console.log(e)
+                    await music.setIsLoopingAsync(true); 
+                    await music.playAsync()
+                  } catch (err) {
+                      console.log(err)
                   }
               }else {
                   await music.stopAsync()
@@ -58,6 +82,7 @@ const Home = (props) => {
                         delayMap={[{at: /\./, delay: 400}]}
                         onTypingEnd={() => { setStep(1);
                                             setMusicStatus(!musicStatus);
+                                            // playSFX(typeSFX1);
                                         }}
                         style={styles.storyText}
                     >
@@ -77,6 +102,7 @@ const Home = (props) => {
                             onChangeText={setPlayerName}
                             onSubmitEditing={() => {setStep(2)}}
                         />
+                        {/* <Button title='Type' onPress={() => playSFX(typeSFX1)}/> */}
                     </View>
                 : null}
 
