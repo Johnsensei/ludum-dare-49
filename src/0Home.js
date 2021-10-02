@@ -87,22 +87,27 @@ const Home = (props) => {
                     </View>
                 : null}
 
-                {/* Initial name input. */}
-                {step === 10 ?
-                    <View>
-                        <TextInput
-                            style={styles.input}
-                            maxLength={15}
-                            value={playerName}
-                            onChangeText={setPlayerName}
-                            onSubmitEditing={() => {setStep(2)}}
-                        />
-                        {/* <Button title='Type' onPress={() => playSFX(typeSFX1)}/> */}
-                    </View>
+                {step >= 2 && step < 4 ?
+                    <TypeWriter
+                        typing={
+                            (step > 2) ? 0 : 1
+                        }
+                        maxDelay={50}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
+                        onTypingEnd={() => { setStep(3)}}
+                        style={styles.storyText}
+                    >
+                        After passing through security and being directed down the hall, you see Dr. Right in the distance.
+                        Yes, the famous Dr. Right whose research into Fourth Energy could be the answer to solve climate change.
+
+                </TypeWriter>
                 : null}
 
                 {/* Text asking to confirm player name. */}
-                {step >= 2 && step < 4 ?
+                {step >= 20 && step < 4 ?
                     <TypeWriter
                     typing={
                         (step > 2) ? 0 : 1
@@ -257,7 +262,7 @@ const styles = StyleSheet.create({
     },
     storyText: {
         color: '#fff',
-        fontSize: RFPercentage(5),
+        fontSize: RFPercentage(4),
         fontWeight: 'bold',
         textShadowOffset: {width: 2, height: 2},
         textShadowRadius: 10,
@@ -276,7 +281,7 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: 'white',
-        fontSize: RFPercentage(3)
+        fontSize: RFPercentage(2)
     },
     imageBackground: {
         width: '100%',
