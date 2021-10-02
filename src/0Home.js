@@ -56,30 +56,39 @@ const Home = (props) => {
             <View style={styles.innerContainer}>
                 
                 {/* Opening Text */}
-                {step <= 1 ?
+                {step >= 0 && step < 2 ?
                     <TypeWriter
                         typing={
                             (step > 0) ? 0 : 1
                         }
                         initialDelay={1000}
-                        maxDelay={100}
-                        delayMap={[{at: /\./, delay: 400}]}
+                        maxDelay={50}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
                         onTypingEnd={() => { setStep(1);
-                                            setMusicStatus(!musicStatus);
+                                            // setMusicStatus(!musicStatus);
                                         }}
                         style={styles.storyText}
                     >
-                    Greetings.{'\n'}
-                    What is your name?
+                        Today is your first day working at the Fourth Energy Research Lab.{'\n'}
+                        You’ve worked and studied for much of your career to end up here: researching a renewable supply of clean energy by splitting atoms on a small scale.
                         
                     </TypeWriter>
                 : null}
 
-                {/* Initial name input. */}
                 {step === 1 ?
+                    <View style={styles.buttonRight}>
+                        <Button
+                            title='Continue'
+                            onPress={()=> setStep(2)}
+                        />
+                    </View>
+                : null}
+
+                {/* Initial name input. */}
+                {step === 10 ?
                     <View>
                         <TextInput
                             style={styles.input}
@@ -200,7 +209,7 @@ const Home = (props) => {
                                 raised={true}
                                 //Pull the player name on A and B with const A = ({route, navigation}) => { const {playerName} = route.params;
                                 onPress={() => {
-                                    setMusicStatus(!musicStatus);
+                                    // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
                                         props.navigation.replace('A',{playerName: playerName})},
                                     1
@@ -215,7 +224,7 @@ const Home = (props) => {
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 onPress={() => {
-                                    setMusicStatus(!musicStatus);
+                                    // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
                                         props.navigation.replace('B',{playerName: playerName})},
                                     1
