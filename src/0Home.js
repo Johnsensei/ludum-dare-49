@@ -10,14 +10,21 @@ import Background from '../img/Devil.png';
 const Home = (props) => {
 
     //Code for sound settings.
-    let typeSFX1 = new Audio.Sound();
-    typeSFX1.loadAsync(require('../audio/type1-5.mp3'));
-    let typeSFX2 = new Audio.Sound();
-    typeSFX2.loadAsync(require('../audio/type2.mp3'));
+    const status = {
+        shouldPlay: false
+    }
+
+    const typeSFX1 = new Audio.Sound();
+    typeSFX1.loadAsync(require('../audio/type1-5.mp3'), status, false);
+    const typeSFX2 = new Audio.Sound();
+    typeSFX2.loadAsync(require('../audio/type2.mp3'), status, false);
 
     function playSFX(sfx){
         sfx.replayAsync();
-        //Do we need to unload the sfx?
+    }
+
+    function typeSFX(token, num){
+        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1);
     }
 
     const [musicStatus, setMusicStatus] = useState(false)
@@ -47,6 +54,9 @@ const Home = (props) => {
     const [step, setStep] = useState(0);
     const [playerName, setPlayerName] = useState('');
 
+    const typeMin = 5;
+    const typeMax = 25;
+
     return(
         <View style={styles.container}>
             <ImageBackground
@@ -62,11 +72,10 @@ const Home = (props) => {
                             (step > 0) ? 0 : 1
                         }
                         initialDelay={1000}
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(1);
                                             // setMusicStatus(!musicStatus);
                                         }}
@@ -92,11 +101,10 @@ const Home = (props) => {
                         typing={
                             (step > 2) ? 0 : 1
                         }
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(3)}}
                         style={styles.storyText}
                     >
@@ -120,11 +128,10 @@ const Home = (props) => {
                         typing={
                             (step > 4) ? 0 : 1
                         }
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(5)}}
                         style={styles.storyText}
                         >
@@ -154,11 +161,10 @@ const Home = (props) => {
                         typing={
                             (step > 6) ? 0 : 1
                         }
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => {setStep(7)}}
                         style={styles.storyText}
                     >
@@ -202,9 +208,8 @@ const Home = (props) => {
                         typing={
                             (step > 8) ? 0 : 1
                         }
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(9)}}
                         style={styles.storyText}
@@ -232,33 +237,27 @@ const Home = (props) => {
                         typing={
                             (step > 10) ? 0 : 1
                         }
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
-                        onTypingEnd={() => {setStep(11);
-                        }}
+//This is where it starts crashing.
+                        onTyped = {typeSFX}
+                        onTypingEnd={() => setStep(11)}
                         style={styles.storyText}
                     >
-                    
                         “Welcome to the Fourth Energy Research Facility, {playerName}.{'\n'}
                         Hope you like coffee! There’s a lot of late nights around here, but it’s exciting work.
                         Let me introduce you to some of your colleagues.
-                        This is Diane and Ethan, two of the senior researchers you’ll be working with.
-                        And over here is our Chief Medical Officer Dr. Bones. Don’t ask us why we call her that!”
                     
                     </TypeWriter>
                 : null}
 
-                {/* Button to proceed. Starts alarm */}
                 {step === 11 ?
                     <View style={styles.buttonRight}>
                         <Button
                             title='Continue'
                             onPress={()=> {
                                 setStep(12);
-                                // playSFX(alarm);
                             }}
                         />
                     </View>
@@ -267,45 +266,52 @@ const Home = (props) => {
 
                 {step >= 12 && step < 14 ?
                     <TypeWriter
-                    typing={
-                        (step > 12) ? 0 : 1
-                    }
-                    maxDelay={50}
-                    onTyped = {(token, num) => {
-                        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                    }}
-                    delayMap={[{at: /\.-!\?/, delay: 400}]}
-                    onTypingEnd={() => {setStep(13)}}
-                    style={styles.storyText}
-                >
-                    “Warning! Warning! A critical breach has occurred at the reactor level. All personnel evacuate immediately!”   
-                </TypeWriter>
+                        typing={
+                            (step > 12) ? 0 : 1
+                        }
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTyped = {typeSFX}
+                        onTypingEnd={() => {setStep(13);
+                        }}
+                        style={styles.storyText}
+                    >
+                        “Welcome to the Fourth Energy Research Facility, {playerName}.{'\n'}
+
+                        This is Diane and Ethan, two of the senior researchers you’ll be working with.
+                        And over here is our Chief Medical Officer Dr. Bones. Don’t ask us why we call her that!”
+                    
+                    </TypeWriter>
                 : null}
 
                 {step === 13 ?
                     <View style={styles.buttonRight}>
-                    <Button
-                        title='Continue'
-                        onPress={()=> setStep(14)}
-                    />
+                        <Button
+                            title='Continue'
+                            onPress={()=> {
+                                setStep(14);
+                                // playSFX(alarm);
+                            }}
+                        />
                     </View>
+                    
                 : null}
 
                 {step >= 14 && step < 16 ?
                     <TypeWriter
-                        typing={
-                            (step > 14) ? 0 : 1
-                        }
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
-                        maxDelay={50}
-                        delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTypingEnd={() => {setStep(15)}}
-                        style={styles.storyText}
-                    >
-                        A loud rumbling sound envelopes the entire facility. The walls begin to bend. The floor begins to shake. Everyone has panicked and scattered throughout the facility. Whatever happened at the reactor level, it’s made the entire building unstable.   
-                    </TypeWriter>
+                    typing={
+                        (step > 14) ? 0 : 1
+                    }
+                    minDelay={typeMin}
+                    maxDelay={typeMax}
+                    onTyped = {typeSFX}
+                    delayMap={[{at: /\.-!\?/, delay: 400}]}
+                    onTypingEnd={() => {setStep(15)}}
+                    style={styles.storyText}
+                >
+                    “Warning! Warning! A critical breach has occurred at the reactor level. All personnel evacuate immediately!”   
+                </TypeWriter>
                 : null}
 
                 {step === 15 ?
@@ -322,12 +328,36 @@ const Home = (props) => {
                         typing={
                             (step > 16) ? 0 : 1
                         }
-                        onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                        }}
-                        maxDelay={50}
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
+                        onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(17)}}
+                        style={styles.storyText}
+                    >
+                        A loud rumbling sound envelopes the entire facility. The walls begin to bend. The floor begins to shake. Everyone has panicked and scattered throughout the facility. Whatever happened at the reactor level, it’s made the entire building unstable.   
+                    </TypeWriter>
+                : null}
+
+                {step === 17 ?
+                    <View style={styles.buttonRight}>
+                    <Button
+                        title='Continue'
+                        onPress={()=> setStep(18)}
+                    />
+                    </View>
+                : null}
+
+                {step >= 18 && step < 20 ?
+                    <TypeWriter
+                        typing={
+                            (step > 18) ? 0 : 1
+                        }
+                        minDelay={typeMin}
+                        maxDelay={typeMax}
+                        onTyped = {typeSFX}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTypingEnd={() => {setStep(19)}}
                         style={styles.storyText}
                     >
                         What do you do?  
@@ -335,7 +365,7 @@ const Home = (props) => {
                 : null}
 
                 {/* Buttons to make choice for next screen. */}
-                {step === 17 ?
+                {step === 19 ?
                     <View style={styles.buttonRow}>
                         <View style={{flex: 1, margin: 20}}>
                             <Button
@@ -427,7 +457,7 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         color: 'white',
-        fontSize: RFPercentage(2)
+        fontSize: RFPercentage(3)
     },
     imageBackground: {
         width: '100%',
