@@ -227,11 +227,12 @@ const Home = (props) => {
                 : null}
 
                 {/* Text to proceed with story if player name is correct. */}
-                {step === 10 ?
+                {step >= 10 && step < 12 ?
                     <TypeWriter
                         typing={
-                            (step > 6) ? 0 : 1
+                            (step > 10) ? 0 : 1
                         }
+                        maxDelay={50}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
@@ -255,7 +256,10 @@ const Home = (props) => {
                     <View style={styles.buttonRight}>
                         <Button
                             title='Continue'
-                            onPress={()=> setStep(12)}
+                            onPress={()=> {
+                                setStep(12);
+                                // playSFX(alarm);
+                            }}
                         />
                     </View>
                     
@@ -264,8 +268,9 @@ const Home = (props) => {
                 {step >= 12 && step < 14 ?
                     <TypeWriter
                     typing={
-                        (step > 4) ? 0 : 1
+                        (step > 12) ? 0 : 1
                     }
+                    maxDelay={50}
                     onTyped = {(token, num) => {
                         (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                     }}
@@ -289,11 +294,12 @@ const Home = (props) => {
                 {step >= 14 && step < 16 ?
                     <TypeWriter
                         typing={
-                            (step > 4) ? 0 : 1
+                            (step > 14) ? 0 : 1
                         }
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
+                        maxDelay={50}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(15)}}
                         style={styles.storyText}
@@ -314,11 +320,12 @@ const Home = (props) => {
                 {step >= 16 && step < 18 ?
                     <TypeWriter
                         typing={
-                            (step > 4) ? 0 : 1
+                            (step > 16) ? 0 : 1
                         }
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
+                        maxDelay={50}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(17)}}
                         style={styles.storyText}
