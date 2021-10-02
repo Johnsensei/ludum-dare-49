@@ -106,70 +106,36 @@ const Home = (props) => {
                 </TypeWriter>
                 : null}
 
-                {/* Text asking to confirm player name. */}
-                {step >= 20 && step < 4 ?
-                    <TypeWriter
-                    typing={
-                        (step > 2) ? 0 : 1
-                    }
-                    delayMap={[{at: /\./, delay: 400}]}
-                    onTyped = {(token, num) => {
-                        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
-                    }}
-                    onTypingEnd={() => {setStep(3)}}
-                    style={styles.storyText}
-                >
-
-                Your name is:{'\n'}
-                {playerName}.{'\n'}
-                Is this correct?
-                
-                </TypeWriter>
-                : null}
-
-                {/* Buttons for player to choose Yes or No that name is correct. */}
                 {step === 3 ?
-                    <View style={styles.buttonRow}>
-                    <View style={{flex: 1, margin: 20}}>
+                    <View style={styles.buttonRight}>
                         <Button
-                            title='Yes, that is correct.'
-                            buttonStyle={styles.buttonStyle}
-                            titleStyle={styles.titleStyle}
-                            raised={true}
-                            onPress={() => setStep(6)}
-                            
+                            title='Continue'
+                            onPress={()=> setStep(4)}
                         />
                     </View>
-                    <View style={{flex: 1, margin: 20}}>
-                        <Button
-                            title='No, I need to change it.'
-                            buttonStyle={styles.buttonStyle}
-                            titleStyle={styles.titleStyle}
-                            raised={true}
-                            onPress={() => setStep(4)}
-                            
-                        />
-                    </View>
-                </View>
                 : null}
 
-                {/* Text for player to correct their name. */}
-                {step >= 4 ?
+                {step >= 4 && step < 6 ?
                     <TypeWriter
                         typing={
                             (step > 4) ? 0 : 1
                         }
+                        maxDelay={50}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
-                        onTypingEnd={() => {setStep(5)}}
+                        onTypingEnd={() => { setStep(5)}}
                         style={styles.storyText}
-                    >
-                        What is your name?   
+                        >
+                        Dr. Right approaches you.{'\n'}
+                        “Hello. You must be our new researcher.{'\n'}
+                        What is your name?”
+
                     </TypeWriter>
                 : null}
 
-                {/* Text input for player to put corrected name. */}
+                {/* Initial name input. */}
                 {step === 5 ?
                     <View>
                         <TextInput
@@ -177,42 +143,199 @@ const Home = (props) => {
                             maxLength={15}
                             value={playerName}
                             onChangeText={setPlayerName}
-                            onSubmitEditing={() => {setStep(2)}}
+                            onSubmitEditing={() => {setStep(6)}}
+                        />
+                    </View>
+                : null}
+
+                {/* Text asking to confirm player name. */}
+                {step >= 6 && step < 8 ?
+                    <TypeWriter
+                        typing={
+                            (step > 6) ? 0 : 1
+                        }
+                        maxDelay={50}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
+                        onTypingEnd={() => {setStep(7)}}
+                        style={styles.storyText}
+                    >
+
+                        Your name is:{'\n'}
+                        {playerName}.{'\n'}
+                        Do I have that right?
+                    
+                    </TypeWriter>
+                : null}
+
+                {/* Buttons for player to choose Yes or No that name is correct. */}
+                {step === 7 ?
+                    <View style={styles.buttonRow}>
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='Yes, that is correct.'
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={styles.titleStyle}
+                            raised={true}
+                            onPress={() => setStep(10)}
+                            
+                        />
+                    </View>
+                    <View style={{flex: 1, margin: 20}}>
+                        <Button
+                            title='No, I need to make a correction.'
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={styles.titleStyle}
+                            raised={true}
+                            onPress={() => setStep(8)}
+                            
+                        />
+                    </View>
+                </View>
+                : null}
+
+                {/* Text for player to correct their name. */}
+                {step >= 8 && step < 10 ?
+                    <TypeWriter
+                        typing={
+                            (step > 8) ? 0 : 1
+                        }
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTypingEnd={() => {setStep(9)}}
+                        style={styles.storyText}
+                    >
+                        What is your name?   
+                    </TypeWriter>
+                : null}
+
+                {/* Text input for player to put corrected name. */}
+                {step === 9 ?
+                    <View>
+                        <TextInput
+                            style={styles.input}
+                            maxLength={15}
+                            value={playerName}
+                            onChangeText={setPlayerName}
+                            onSubmitEditing={() => {setStep(6)}}
                         /> 
                     </View>
                 : null}
 
                 {/* Text to proceed with story if player name is correct. */}
-                {step >= 6 ?
+                {step === 10 ?
                     <TypeWriter
                         typing={
                             (step > 6) ? 0 : 1
                         }
-                        delayMap={[{at: /\./, delay: 400}]}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTyped = {(token, num) => {
                             (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
                         }}
-                        onTypingEnd={() => {setStep(7);
+                        onTypingEnd={() => {setStep(11);
                         }}
                         style={styles.storyText}
                     >
                     
-                    Welcome to this world, {playerName}.{'\n'}
-                    What choice will you make?
+                        “Welcome to the Fourth Energy Research Facility, {playerName}.{'\n'}
+                        Hope you like coffee! There’s a lot of late nights around here, but it’s exciting work.
+                        Let me introduce you to some of your colleagues.
+                        This is Diane and Ethan, two of the senior researchers you’ll be working with.
+                        And over here is our Chief Medical Officer Dr. Bones. Don’t ask us why we call her that!”
                     
                     </TypeWriter>
                 : null}
 
+                {/* Button to proceed. Starts alarm */}
+                {step === 11 ?
+                    <View style={styles.buttonRight}>
+                        <Button
+                            title='Continue'
+                            onPress={()=> setStep(12)}
+                        />
+                    </View>
+                    
+                : null}
+
+                {step >= 12 && step < 14 ?
+                    <TypeWriter
+                    typing={
+                        (step > 4) ? 0 : 1
+                    }
+                    onTyped = {(token, num) => {
+                        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                    }}
+                    delayMap={[{at: /\.-!\?/, delay: 400}]}
+                    onTypingEnd={() => {setStep(13)}}
+                    style={styles.storyText}
+                >
+                    “Warning! Warning! A critical breach has occurred at the reactor level. All personnel evacuate immediately!”   
+                </TypeWriter>
+                : null}
+
+                {step === 13 ?
+                    <View style={styles.buttonRight}>
+                    <Button
+                        title='Continue'
+                        onPress={()=> setStep(14)}
+                    />
+                    </View>
+                : null}
+
+                {step >= 14 && step < 16 ?
+                    <TypeWriter
+                        typing={
+                            (step > 4) ? 0 : 1
+                        }
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTypingEnd={() => {setStep(15)}}
+                        style={styles.storyText}
+                    >
+                        A loud rumbling sound envelopes the entire facility. The walls begin to bend. The floor begins to shake. Everyone has panicked and scattered throughout the facility. Whatever happened at the reactor level, it’s made the entire building unstable.   
+                    </TypeWriter>
+                : null}
+
+                {step === 15 ?
+                    <View style={styles.buttonRight}>
+                    <Button
+                        title='Continue'
+                        onPress={()=> setStep(16)}
+                    />
+                    </View>
+                : null}
+
+                {step >= 16 && step < 18 ?
+                    <TypeWriter
+                        typing={
+                            (step > 4) ? 0 : 1
+                        }
+                        onTyped = {(token, num) => {
+                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                        }}
+                        delayMap={[{at: /\.-!\?/, delay: 400}]}
+                        onTypingEnd={() => {setStep(17)}}
+                        style={styles.storyText}
+                    >
+                        What do you do?  
+                    </TypeWriter>
+                : null}
+
                 {/* Buttons to make choice for next screen. */}
-                {step === 7 ?
+                {step === 17 ?
                     <View style={styles.buttonRow}>
                         <View style={{flex: 1, margin: 20}}>
                             <Button
-                                title='Choice A'
+                                title='Save people.'
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
-                                //Pull the player name on A and B with const A = ({route, navigation}) => { const {playerName} = route.params;
                                 onPress={() => {
                                     // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
@@ -224,7 +347,7 @@ const Home = (props) => {
                         </View>
                         <View style={{flex: 1, margin: 20}}>
                             <Button
-                                title='Choice B'
+                                title='Escape'
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
@@ -237,8 +360,24 @@ const Home = (props) => {
                                 }}
                             />
                         </View>
+                        <View style={{flex: 1, margin: 20}}>
+                            <Button
+                                title='Investigate the cause of the accident.'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
+                                onPress={() => {
+                                    // setMusicStatus(!musicStatus);
+                                    setTimeout(() => {
+                                        props.navigation.replace('C',{playerName: playerName})},
+                                    1
+                                    );
+                                }}
+                            />
+                        </View>
                     </View>
                 : null}
+                
                 
 
             </View>
