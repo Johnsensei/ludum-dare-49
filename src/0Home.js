@@ -10,48 +10,53 @@ import Background from '../img/Devil.png';
 const Home = (props) => {
 
     //Code for sound settings.
-    const status = {
-        shouldPlay: false
-    }
+    // const status = {
+    //     shouldPlay: false
+    // }
 
-    const typeSFX1 = new Audio.Sound();
-    typeSFX1.loadAsync(require('../audio/type1-5.mp3'), status, false);
-    const typeSFX2 = new Audio.Sound();
-    typeSFX2.loadAsync(require('../audio/type2.mp3'), status, false);
+    // const typeSFX1 = new Audio.Sound();
+    // typeSFX1.loadAsync(require('../audio/type1-5.mp3'), status, false);
+    // const typeSFX2 = new Audio.Sound();
+    // typeSFX2.loadAsync(require('../audio/type2.mp3'), status, false);
 
-    function playSFX(sfx){
-        sfx.replayAsync();
-    }
+    // function playSFX(sfx){
+    //     try {
+    //         sfx.replayAsync();
+    //     } catch (error) {
+    //         console.log(err);
+    //     }
+    // }
 
-    function typeSFX(token, num){
-        (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1);
-    }
+    // function typeSFX(token, num){
+    //         (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1);
+    //     }
 
-    const [musicStatus, setMusicStatus] = useState(false)
-    const [music, setMusic] = useState(new Audio.Sound());
+    // const [musicStatus, setMusicStatus] = useState(false)
+    // const [music, setMusic] = useState(new Audio.Sound());
     
-    useEffect(()=>{
-      (async () => {
-              console.log('status', musicStatus)
-              if (musicStatus) {
-                  await music.loadAsync(require('../audio/music1.mp3'))
-                  try {
-                    //Change this whether you want looping or not.
-                    //As there is no way to fade music out, short non-looping music files may be best.
-                    await music.setIsLoopingAsync(true); 
-                    await music.playAsync()
-                  } catch (err) {
-                      console.log(err)
-                  }
-              }else {
-                  await music.stopAsync()
-                  await music.unloadAsync()
-              }
-            })()
-    },[musicStatus]) 
+    // useEffect(()=>{
+    //   (async () => {
+    //           console.log('status', musicStatus)
+    //           if (musicStatus) {
+    //               await music.loadAsync(require('../audio/music1.mp3'))
+    //               try {
+    //                 //Change this whether you want looping or not.
+    //                 //As there is no way to fade music out, short non-looping music files may be best.
+    //                 await music.setIsLoopingAsync(true); 
+    //                 await music.playAsync()
+    //               } catch (err) {
+    //                   console.log(err)
+    //               }
+    //           }else {
+    //               await music.stopAsync()
+    //               await music.unloadAsync()
+    //           }
+    //         })()
+    // },[musicStatus]) 
 
     //Game progression state setup.
     const [step, setStep] = useState(0);
+
     const [playerName, setPlayerName] = useState('');
 
     const typeMin = 5;
@@ -64,7 +69,7 @@ const Home = (props) => {
                 style={styles.imageBackground}
             >
             <View style={styles.innerContainer}>
-                
+
                 {/* Opening Text */}
                 {step >= 0 && step < 2 ?
                     <TypeWriter
@@ -75,7 +80,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {typeSFX}
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(1);
                                             // setMusicStatus(!musicStatus);
                                         }}
@@ -104,7 +109,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {typeSFX}
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(3)}}
                         style={styles.storyText}
                     >
@@ -131,7 +136,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {typeSFX}
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(5)}}
                         style={styles.storyText}
                         >
@@ -164,7 +169,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {typeSFX}
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => {setStep(7)}}
                         style={styles.storyText}
                     >
@@ -240,8 +245,8 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-//This is where it starts crashing.
-                        onTyped = {typeSFX}
+//Stopped crashing here after I upgraded expo on device.
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => setStep(11)}
                         style={styles.storyText}
                     >
@@ -272,13 +277,11 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        onTyped = {typeSFX}
+                        // onTyped = {typeSFX}
                         onTypingEnd={() => {setStep(13);
                         }}
                         style={styles.storyText}
                     >
-                        “Welcome to the Fourth Energy Research Facility, {playerName}.{'\n'}
-
                         This is Diane and Ethan, two of the senior researchers you’ll be working with.
                         And over here is our Chief Medical Officer Dr. Bones. Don’t ask us why we call her that!”
                     
@@ -291,7 +294,6 @@ const Home = (props) => {
                             title='Continue'
                             onPress={()=> {
                                 setStep(14);
-                                // playSFX(alarm);
                             }}
                         />
                     </View>
@@ -305,7 +307,7 @@ const Home = (props) => {
                     }
                     minDelay={typeMin}
                     maxDelay={typeMax}
-                    onTyped = {typeSFX}
+                    // onTyped = {typeSFX}
                     delayMap={[{at: /\.-!\?/, delay: 400}]}
                     onTypingEnd={() => {setStep(15)}}
                     style={styles.storyText}
@@ -330,7 +332,8 @@ const Home = (props) => {
                         }
                         minDelay={typeMin}
                         maxDelay={typeMax}
-                        onTyped = {typeSFX}
+//Stopped crashing here after implementing try catch in typeSFX.
+                        // onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(17)}}
                         style={styles.storyText}
@@ -355,7 +358,8 @@ const Home = (props) => {
                         }
                         minDelay={typeMin}
                         maxDelay={typeMax}
-                        onTyped = {typeSFX}
+//Now crashing here with different error messages.
+                        // onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(19)}}
                         style={styles.storyText}
@@ -415,8 +419,6 @@ const Home = (props) => {
                     </View>
                 : null}
                 
-                
-
             </View>
 
             </ImageBackground>
