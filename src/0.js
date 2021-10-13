@@ -8,29 +8,6 @@ import Background from '../img/hallway_2.png';
 
 const Start = (props) => {
 
-    const [musicStatus, setMusicStatus] = useState(true);
-    const [music, setMusic] = useState(new Audio.Sound());
-    
-    useEffect(()=>{
-      (async () => {
-              console.log('status', musicStatus)
-              if (musicStatus) {
-                  await music.loadAsync(require('../audio/lab_intro_loop_v00r00.mp3'))
-                  try {
-                    //Change this whether you want looping or not.
-                    //As there is no way to fade music out, short non-looping music files may be best.
-                    await music.setIsLoopingAsync(true); 
-                    await music.playAsync()
-                  } catch (err) {
-                      console.log(err)
-                  }
-              }else {
-                  await music.stopAsync()
-                  await music.unloadAsync()
-              }
-            })()
-    },[musicStatus])
-
     return(
         <View style={styles.container}>
             <ImageBackground
@@ -46,7 +23,7 @@ const Start = (props) => {
                 onPress={() => {
                     setTimeout(() => {
                         props.navigation.replace('Home')},
-                    1
+                        1
                     );
                 }}
             />
@@ -76,7 +53,6 @@ const styles = StyleSheet.create({
         textShadowRadius: 10,
         textShadowColor: '#0002B7',
         textAlign: 'center',
-        //TODO: Choose font.
         margin: 50
     },
     buttonRow: {

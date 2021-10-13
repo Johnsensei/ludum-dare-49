@@ -4,47 +4,25 @@ import { Button } from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Audio } from 'expo-av';
+import * as Linking from 'expo-linking';
 
-import Background from '../img/DemonCastle.png';
+import Background from '../img/hallway.png';
 
-const A = ({route, props}) => {
-
-    //Params passed down.
-    const {playerName, navigation} = route.params;
-
+const A = (props) => {
+    
     //Code for sound settings.
-    let typeSFX1 = new Audio.Sound();
-    typeSFX1.loadAsync(require('../audio/type1-5.mp3'));
-    let typeSFX2 = new Audio.Sound();
-    typeSFX2.loadAsync(require('../audio/type2.mp3'));
+    const status = {
+        shouldPlay: false
+    }
+
+    const typeSFX1 = new Audio.Sound();
+    typeSFX1.loadAsync(require('../audio/digital-typing-1.mp3'), status, false);
+    const typeSFX2 = new Audio.Sound();
+    typeSFX2.loadAsync(require('../audio/digital-typing-2.mp3'), status, false);
 
     function playSFX(sfx){
         sfx.replayAsync();
-        //Do we need to unload the sfx?
     }
-
-    const [musicStatus, setMusicStatus] = useState(false)
-    const [music, setMusic] = useState(new Audio.Sound());
-    
-    useEffect(()=>{
-      (async () => {
-              console.log('status', musicStatus)
-              if (musicStatus) {
-                  await music.loadAsync(require('../audio/music1.mp3'))
-                  try {
-                    //Change this whether you want looping or not.
-                    //As there is no way to fade music out, short non-looping music files may be best.
-                    await music.setIsLoopingAsync(true); 
-                    await music.playAsync()
-                  } catch (err) {
-                      console.log(err)
-                  }
-              }else {
-                  await music.stopAsync()
-                  await music.unloadAsync()
-              }
-            })()
-    },[musicStatus])
 
     //Game progression state setup.
     const [step, setStep] = useState(0);
@@ -66,51 +44,45 @@ const A = ({route, props}) => {
                         maxDelay={100}
                         delayMap={[{at: /\./, delay: 400}]}
                         onTyped = {(token, num) => {
-                            (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1)
+                            (num % 2 !== 0) ? playSFX(typeSFX1) : playSFX(typeSFX2)
                         }}
                         onTypingEnd={() => { setStep(1);
-                                            // setMusicStatus(!musicStatus);
                                         }}
                         style={styles.storyText}
                     >
-                    The player {playerName} went with Choice A.
+                    You chose to save people. Good for you.
                         
                     </TypeWriter>
                 : null}
                 
                 {step === 1 ?
-                    <View style={styles.buttonRow}>
-                    <View style={{flex: 1, margin: 20}}>
+                    <View>
+                        <View style={{margin: 10}}>
                             <Button
-                                title='Choice C - Go Home for Now'
+                                title='Play the full game'
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 onPress={() => {
-                                    // setMusicStatus(!musicStatus);
+                                    Linking.openURL('https://johnsensei.itch.io/fourth-energy');
+                                }}
+                            />
+                        </View>
+                        <View style={{margin: 10}}>
+                            <Button
+                                title='Start demo over'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
+                                onPress={() => {
                                     setTimeout(() => {
-                                        props.navigation.replace('Home',{playerName: playerName})},
+                                        props.navigation.replace('Home')},
                                     1
                                     );
                                 }}
                             />
                         </View>
-                        <View style={{flex: 1, margin: 20}}>
-                            <Button
-                                title='Choice D - Go Home for Now'
-                                buttonStyle={styles.buttonStyle}
-                                titleStyle={styles.titleStyle}
-                                raised={true}
-                                onPress={() => {
-                                    // setMusicStatus(!musicStatus);
-                                    setTimeout(() => {
-                                        props.navigation.replace('Home',{playerName: playerName})},
-                                    1
-                                    );
-                                }}
-                            />
-                        </View>
-                </View>
+                    </View>
                 : null}
                 
             </View>
@@ -133,13 +105,12 @@ const styles = StyleSheet.create({
     },
     storyText: {
         color: '#fff',
-        fontSize: RFPercentage(5),
+        fontSize: RFPercentage(4),
         fontWeight: 'bold',
         textShadowOffset: {width: 2, height: 2},
         textShadowRadius: 10,
-        textShadowColor: 'red',
+        textShadowColor: '#0002B7',
         textAlign: 'center',
-        //TODO: Choose font.
         margin: 50
     },
     buttonRow: {

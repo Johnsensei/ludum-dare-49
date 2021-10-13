@@ -31,7 +31,7 @@ const Home = (props) => {
             (num % 2 !== 0) ? playSFX(typeSFX1) : playSFX(typeSFX2);
         }
 
-    const [musicStatus, setMusicStatus] = useState(false)
+    const [musicStatus, setMusicStatus] = useState(true)
     const [music, setMusic] = useState(new Audio.Sound());
     
     useEffect(()=>{
@@ -41,13 +41,13 @@ const Home = (props) => {
                   await music.loadAsync(require('../audio/lab_intro_loop_v00r00.mp3'))
                   try {
                     //Change this whether you want looping or not.
-                    //As there is no way to fade music out, short non-looping music files may be best.
                     await music.setIsLoopingAsync(true); 
                     await music.playAsync()
                   } catch (err) {
                       console.log(err)
                   }
               }else {
+                  //Try catch here to see if warning stops on music stop
                   await music.stopAsync()
                   await music.unloadAsync()
               }
@@ -81,9 +81,7 @@ const Home = (props) => {
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTyped = {typeSFX}
-                        onTypingEnd={() => { setStep(1);
-                                            // setMusicStatus(!musicStatus);
-                                        }}
+                        onTypingEnd={() => { setStep(1);}}
                         style={styles.storyText}
                     >
                         Today is your first day working at the Fourth Energy Research Lab.{'\n'}
@@ -183,29 +181,28 @@ const Home = (props) => {
 
                 {/* Buttons for player to choose Yes or No that name is correct. */}
                 {step === 7 ?
-                // <View style={styles.buttonRow}>
-                <View>
-                    <View style={{margin: 10}}>
-                        <Button
-                            title='Yes, that is correct.'
-                            buttonStyle={styles.buttonStyle}
-                            titleStyle={styles.titleStyle}
-                            raised={true}
-                            onPress={() => setStep(10)}
-                            
-                        />
+                    <View>
+                        <View style={{margin: 10}}>
+                            <Button
+                                title='Yes, that is correct.'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
+                                onPress={() => setStep(10)}
+                                
+                            />
+                        </View>
+                        <View style={{margin: 10}}>
+                            <Button
+                                title='No, I need to make a correction.'
+                                buttonStyle={styles.buttonStyle}
+                                titleStyle={styles.titleStyle}
+                                raised={true}
+                                onPress={() => setStep(8)}
+                                
+                            />
+                        </View>
                     </View>
-                    <View style={{margin: 10}}>
-                        <Button
-                            title='No, I need to make a correction.'
-                            buttonStyle={styles.buttonStyle}
-                            titleStyle={styles.titleStyle}
-                            raised={true}
-                            onPress={() => setStep(8)}
-                            
-                        />
-                    </View>
-                </View>
                 : null}
 
                 {/* Text for player to correct their name. */}
@@ -296,6 +293,7 @@ const Home = (props) => {
                             title='Continue'
                             onPress={()=> {
                                 setStep(14);
+                                setMusicStatus(!musicStatus);
                             }}
                         />
                     </View>
@@ -372,9 +370,8 @@ const Home = (props) => {
 
                 {/* Buttons to make choice for next screen. */}
                 {step === 19 ?
-                    // <View style={styles.buttonRow}>
+
                     <View>
-                        {/* <View style={{flex: 1, margin: 20}}> */}
                         <View style={{margin: 10}}>
                             <Button
                                 title='Save people'
@@ -382,15 +379,14 @@ const Home = (props) => {
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 onPress={() => {
-                                    // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
                                         props.navigation.replace('A',{playerName: playerName})},
-                                    1
+                                        1
                                     );
                                 }}
                             />
                         </View >
-                        {/* <View style={{flex: 1, margin: 20}}> */}
+
                         <View style={{margin: 10}}>
                             <Button
                                 title='Escape'
@@ -398,15 +394,14 @@ const Home = (props) => {
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 onPress={() => {
-                                    // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
                                         props.navigation.replace('B',{playerName: playerName})},
-                                    1
+                                        1
                                     );
                                 }}
                             />
                         </View>
-                        {/* <View style={{flex: 1, margin: 20}}> */}
+
                         <View style={{margin: 10}}>
                             <Button
                                 title='Investigate the cause of the accident'
@@ -414,10 +409,9 @@ const Home = (props) => {
                                 titleStyle={styles.titleStyle}
                                 raised={true}
                                 onPress={() => {
-                                    // setMusicStatus(!musicStatus);
                                     setTimeout(() => {
                                         props.navigation.replace('C',{playerName: playerName})},
-                                    1
+                                        1
                                     );
                                 }}
                             />
@@ -452,7 +446,6 @@ const styles = StyleSheet.create({
         textShadowRadius: 10,
         textShadowColor: '#0002B7',
         textAlign: 'center',
-        //TODO: Choose font.
         margin: 50
     },
     buttonRow: {
