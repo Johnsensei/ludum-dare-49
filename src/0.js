@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
