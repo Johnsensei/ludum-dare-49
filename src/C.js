@@ -6,9 +6,9 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Audio } from 'expo-av';
 import * as Linking from 'expo-linking';
 
-import Background from '../img/door.png';
+import Background from '../img/hallway_2.png';
 
-const B = (props) => {
+const C = (props) => {
     
     //Code for sound settings.
     const status = {
@@ -50,7 +50,7 @@ const B = (props) => {
                                         }}
                         style={styles.storyText}
                     >
-                    You chose to escape. Enjoy the rest of your life.
+                    You chose to investigate the cause. How brave.
                         
                     </TypeWriter>
                 : null}
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
       }
   });
 
-export default B;
+export default C;
