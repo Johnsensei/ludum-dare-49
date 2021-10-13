@@ -32,7 +32,7 @@ const Home = (props) => {
         }
 
     const [musicStatus, setMusicStatus] = useState(true)
-    const [music, setMusic] = useState(new Audio.Sound());
+    const [music] = useState(new Audio.Sound());
     
     useEffect(()=>{
       (async () => {
@@ -447,11 +447,6 @@ const styles = StyleSheet.create({
         textShadowColor: '#0002B7',
         textAlign: 'center',
         margin: 50
-    },
-    buttonRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
     },
     buttonStyle: {
         backgroundColor: 'grey'

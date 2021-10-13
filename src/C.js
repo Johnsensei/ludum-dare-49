@@ -113,11 +113,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 50
     },
-    buttonRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
     buttonStyle: {
         backgroundColor: 'grey'
     },
@@ -128,17 +123,7 @@ const styles = StyleSheet.create({
     imageBackground: {
         width: '100%',
         height: '100%'
-    },
-    input: {
-        height: 100,
-        width: 500,
-        fontSize: 64,
-        textAlign: 'center',
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        backgroundColor: 'white'
-      }
+    }
   });
 
 export default C;
