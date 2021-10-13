@@ -8,7 +8,7 @@ import Background from '../img/hallway_2.png';
 
 const Start = (props) => {
 
-    const [musicStatus, setMusicStatus] = useState(false)
+    const [musicStatus, setMusicStatus] = useState(true);
     const [music, setMusic] = useState(new Audio.Sound());
     
     useEffect(()=>{
@@ -45,7 +45,7 @@ const Start = (props) => {
                 raised={true}
                 onPress={() => {
                     setTimeout(() => {
-                        props.navigation.replace('Home',{playerName: playerName})},
+                        props.navigation.replace('Home')},
                     1
                     );
                 }}
