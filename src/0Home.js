@@ -5,54 +5,54 @@ import TypeWriter from 'react-native-typewriter';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Audio } from 'expo-av';
 
-import Background from '../img/Devil.png';
+import Background from '../img/hallway_2.png';
 
 const Home = (props) => {
 
     //Code for sound settings.
-    // const status = {
-    //     shouldPlay: false
-    // }
+    const status = {
+        shouldPlay: false
+    }
 
-    // const typeSFX1 = new Audio.Sound();
-    // typeSFX1.loadAsync(require('../audio/type1-5.mp3'), status, false);
-    // const typeSFX2 = new Audio.Sound();
-    // typeSFX2.loadAsync(require('../audio/type2.mp3'), status, false);
+    const typeSFX1 = new Audio.Sound();
+    typeSFX1.loadAsync(require('../audio/digital-typing-1.mp3'), status, false);
+    const typeSFX2 = new Audio.Sound();
+    typeSFX2.loadAsync(require('../audio/digital-typing-2.mp3'), status, false);
 
-    // function playSFX(sfx){
-    //     try {
-    //         sfx.replayAsync();
-    //     } catch (error) {
-    //         console.log(err);
-    //     }
-    // }
+    function playSFX(sfx){
+        try {
+            sfx.replayAsync();
+        } catch (error) {
+            console.log(err);
+        }
+    }
 
-    // function typeSFX(token, num){
-    //         (num % 2 === 0) ? playSFX(typeSFX2) : playSFX(typeSFX1);
-    //     }
+    function typeSFX(token, num){
+            (num % 2 !== 0) ? playSFX(typeSFX1) : playSFX(typeSFX2);
+        }
 
-    // const [musicStatus, setMusicStatus] = useState(false)
-    // const [music, setMusic] = useState(new Audio.Sound());
+    const [musicStatus, setMusicStatus] = useState(false)
+    const [music, setMusic] = useState(new Audio.Sound());
     
-    // useEffect(()=>{
-    //   (async () => {
-    //           console.log('status', musicStatus)
-    //           if (musicStatus) {
-    //               await music.loadAsync(require('../audio/music1.mp3'))
-    //               try {
-    //                 //Change this whether you want looping or not.
-    //                 //As there is no way to fade music out, short non-looping music files may be best.
-    //                 await music.setIsLoopingAsync(true); 
-    //                 await music.playAsync()
-    //               } catch (err) {
-    //                   console.log(err)
-    //               }
-    //           }else {
-    //               await music.stopAsync()
-    //               await music.unloadAsync()
-    //           }
-    //         })()
-    // },[musicStatus]) 
+    useEffect(()=>{
+      (async () => {
+              console.log('status', musicStatus)
+              if (musicStatus) {
+                  await music.loadAsync(require('../audio/music1.mp3'))
+                  try {
+                    //Change this whether you want looping or not.
+                    //As there is no way to fade music out, short non-looping music files may be best.
+                    await music.setIsLoopingAsync(true); 
+                    await music.playAsync()
+                  } catch (err) {
+                      console.log(err)
+                  }
+              }else {
+                  await music.stopAsync()
+                  await music.unloadAsync()
+              }
+            })()
+    },[musicStatus]) 
 
     //Game progression state setup.
     const [step, setStep] = useState(0);
@@ -80,7 +80,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(1);
                                             // setMusicStatus(!musicStatus);
                                         }}
@@ -109,7 +109,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(3)}}
                         style={styles.storyText}
                     >
@@ -136,7 +136,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => { setStep(5)}}
                         style={styles.storyText}
                         >
@@ -169,7 +169,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => {setStep(7)}}
                         style={styles.storyText}
                     >
@@ -183,8 +183,9 @@ const Home = (props) => {
 
                 {/* Buttons for player to choose Yes or No that name is correct. */}
                 {step === 7 ?
-                    <View style={styles.buttonRow}>
-                    <View style={{flex: 1, margin: 20}}>
+                // <View style={styles.buttonRow}>
+                <View>
+                    <View style={{margin: 10}}>
                         <Button
                             title='Yes, that is correct.'
                             buttonStyle={styles.buttonStyle}
@@ -194,7 +195,7 @@ const Home = (props) => {
                             
                         />
                     </View>
-                    <View style={{flex: 1, margin: 20}}>
+                    <View style={{margin: 10}}>
                         <Button
                             title='No, I need to make a correction.'
                             buttonStyle={styles.buttonStyle}
@@ -215,6 +216,7 @@ const Home = (props) => {
                         }
                         minDelay={typeMin}
                         maxDelay={typeMax}
+                        onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(9)}}
                         style={styles.storyText}
@@ -246,7 +248,7 @@ const Home = (props) => {
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
 //Stopped crashing here after I upgraded expo on device.
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => setStep(11)}
                         style={styles.storyText}
                     >
@@ -277,7 +279,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         onTypingEnd={() => {setStep(13);
                         }}
                         style={styles.storyText}
@@ -307,7 +309,7 @@ const Home = (props) => {
                     }
                     minDelay={typeMin}
                     maxDelay={typeMax}
-                    // onTyped = {typeSFX}
+                    onTyped = {typeSFX}
                     delayMap={[{at: /\.-!\?/, delay: 400}]}
                     onTypingEnd={() => {setStep(15)}}
                     style={styles.storyText}
@@ -333,7 +335,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
 //Stopped crashing here after implementing try catch in typeSFX.
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(17)}}
                         style={styles.storyText}
@@ -359,7 +361,7 @@ const Home = (props) => {
                         minDelay={typeMin}
                         maxDelay={typeMax}
 //Now crashing here with different error messages.
-                        // onTyped = {typeSFX}
+                        onTyped = {typeSFX}
                         delayMap={[{at: /\.-!\?/, delay: 400}]}
                         onTypingEnd={() => {setStep(19)}}
                         style={styles.storyText}
@@ -370,10 +372,12 @@ const Home = (props) => {
 
                 {/* Buttons to make choice for next screen. */}
                 {step === 19 ?
-                    <View style={styles.buttonRow}>
-                        <View style={{flex: 1, margin: 20}}>
+                    // <View style={styles.buttonRow}>
+                    <View>
+                        {/* <View style={{flex: 1, margin: 20}}> */}
+                        <View style={{margin: 10}}>
                             <Button
-                                title='Save people.'
+                                title='Save people'
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
@@ -385,8 +389,9 @@ const Home = (props) => {
                                     );
                                 }}
                             />
-                        </View>
-                        <View style={{flex: 1, margin: 20}}>
+                        </View >
+                        {/* <View style={{flex: 1, margin: 20}}> */}
+                        <View style={{margin: 10}}>
                             <Button
                                 title='Escape'
                                 buttonStyle={styles.buttonStyle}
@@ -401,9 +406,10 @@ const Home = (props) => {
                                 }}
                             />
                         </View>
-                        <View style={{flex: 1, margin: 20}}>
+                        {/* <View style={{flex: 1, margin: 20}}> */}
+                        <View style={{margin: 10}}>
                             <Button
-                                title='Investigate the cause of the accident.'
+                                title='Investigate the cause of the accident'
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={styles.titleStyle}
                                 raised={true}
@@ -444,7 +450,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textShadowOffset: {width: 2, height: 2},
         textShadowRadius: 10,
-        textShadowColor: 'red',
+        textShadowColor: '#0002B7',
         textAlign: 'center',
         //TODO: Choose font.
         margin: 50
