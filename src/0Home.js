@@ -38,7 +38,7 @@ const Home = (props) => {
       (async () => {
               console.log('status', musicStatus)
               if (musicStatus) {
-                  await music.loadAsync(require('../audio/music1.mp3'))
+                  await music.loadAsync(require('../audio/lab_intro_loop_v00r00.mp3'))
                   try {
                     //Change this whether you want looping or not.
                     //As there is no way to fade music out, short non-looping music files may be best.
