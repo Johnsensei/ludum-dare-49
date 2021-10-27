@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import { Audio } from 'expo-av';
 
 import Background from '../img/hallway_2.png';
