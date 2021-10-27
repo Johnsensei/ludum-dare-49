@@ -47,7 +47,6 @@ const Home = (props) => {
                       console.log(err)
                   }
               }else {
-                  //Try catch here to see if warning stops on music stop
                   await music.stopAsync()
                   await music.unloadAsync()
               }
